@@ -1,0 +1,18 @@
+<div class="mdui-row mdui-valign" style="height: 48px">
+    <div class="mdui-col-offset-md-1 mdui-col-md-1 mdui-col-xs-2">
+        <a href="/user/{{user.id}}">
+            <img src="/media/{{ profile.img }}" class="avatar" />
+        </a>
+    </div>
+    <div class="mdui-col-md-8 mdui-col-xs-10">
+        <div class="mdui-container-fluid">
+            <div class="mdui-row">
+                <span class="nickname">{{profile.nike_name}}</span>
+                {% include "fan/components/user_title.html" with title=profile.title title_level=profile.title_level %}
+            </div>
+            <div class="mdui-row">
+                <span class="username">@{{user.username}}</span>
+            </div>
+        </div>
+    </div>
+</div>

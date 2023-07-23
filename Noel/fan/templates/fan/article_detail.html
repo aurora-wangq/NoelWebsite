@@ -1,0 +1,98 @@
+{% extends "fan/_base.html" %}
+
+{% block title %}帖子{% endblock %}
+
+{% block content %}
+<style>
+
+	.post-content {
+		font-size: 32px;
+		padding-top: 12px;
+		font-weight: 300;
+	}
+
+	.post-image {
+		width: 65%;
+		padding: auto;
+		margin: auto;
+	}
+
+	.nickname,
+	.username,
+	.user-title {
+		margin-left: 6px;
+		margin-right: 6px;
+	}
+
+	.comment-username {
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	.comment-content {
+		/* padding-top: 2px; */
+		font-size: 18px;
+	}
+</style>
+
+<br />
+
+<div class="mdui-container" style="padding-top: 32px;">
+	{% include "fan/components/user_info.html" with profile=owner_profile user=owner %}
+	<br />
+
+	<div class="mdui-row">
+		<div class="mdui-col-offset-md-2 mdui-col-md-8 mdui-col-xs-12">
+			<span class="post-content" style="font-weight:500; font-size: 18px">
+				{{content}}
+			</span>
+		</div>
+	</div>
+
+	<div class="mdui-row">
+		<div class="mdui-col-md-8 mdui-col-offset-md-2">
+			<img src="/media/{{ post.post_img1 }}" style="width: 100%;">
+		</div>
+	</div>
+</div>
+
+<div class="mdui-container">
+	<div class="mdui-row">
+		<div class="mdui-col-xs-1 mdui-col-offset-xs-10">
+			<button class="mdui-btn mdui-btn-icon btn-toggle-blur mdui-ripple" id="like-button" onclick="like_or_not()">
+				<i class="mdui-icon material-icons" id="like-icon">favorite{% if liked == 0 %}_border{% endif %}</i>
+			</button>
+		</div>
+	</div>
+
+	{% include "fan/components/comments.html" with comments=comment_list %}
+</div>
+
+<script>
+	function like_or_not() {
+		var xhr = new XMLHttpRequest();
+		var btn = document.getElementById('like-button');
+		var icon = document.getElementById('like-icon');
+		btn.setAttribute('disabled', 'true');
+		xhr.open("POST", "{{post.id}}/like");
+		xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+		xhr.send();
+		if (icon.innerHTML.trim() == 'favorite') {
+			icon.innerHTML = 'favorite_border';
+		}
+		else {
+			icon.innerHTML = 'favorite';
+		}
+		xhr.onreadystatechange = function () {
+			btn.removeAttribute('disabled');
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				mdui.snackbar(xhr.responseText);
+			}
+			else if (xhr.readyState == 4) {
+				mdui.snackbar('Failed ' + xhr.status);
+			}
+		};
+	}
+</script>
+
+{% endblock %}

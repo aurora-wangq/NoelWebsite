@@ -1,0 +1,83 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Noel</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/user-titles.css" />
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" />
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    {% block head %}{% endblock %}
+</head>
+
+<body class="mdui-appbar-with-toolbar">
+
+    <!-- Appbar -->
+    <header class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-pink-50">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '.mdui-drawer'}">
+                <i class="mdui-icon material-icons">menu</i>
+            </a>
+            <a href="{% url 'fan:home' %}" class="mdui-typo-headline">
+                <h1 style="font-weight:400; font-size: 30px; text-align:center">
+                    N
+                    <img src="/static/images/qll.png" style="width:25px;height:25px;">
+                    e l
+                </h1>
+            </a>
+            <a class="mdui-typo-title">{% block title %}[Untitled]{% endblock %}</a>
+            <div class="mdui-toolbar-spacer"></div>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#account-menu'}">
+                <img src="/media/{{ user.img }}" class="appbar-avatar" />
+            </a>
+            <ul class="mdui-menu" id="account-menu">
+                <li class="mdui-menu-item">
+                    <a href="{% url 'fan:user_page' %}" class="mdui-ripple">
+                        <b>{{user.owner.username}}</b>
+                    </a>
+                </li>
+                <li class="mdui-divider"></li>
+                <li class="mdui-menu-item">
+                    <a href="{% url 'fan:login' %}" class="mdui-ripple">登录</a>
+                </li>
+                <li class="mdui-menu-item">
+                    <a href="{% url 'fan:register' %}" class="mdui-ripple">注册</a>
+                </li>
+                <li class="mdui-menu-item">
+                    <a href="{% url 'fan:logout' %}" class="mdui-ripple">登出</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Drawer -->
+    <div class="mdui-drawer mdui-drawer-close">
+        <ul class="mdui-list">
+            <a class="mdui-list-item mdui-ripple" href="{% url 'fan:home' %}">
+                <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
+                <div class="mdui-list-item-content">首页</div>
+            </a>
+        </ul>
+    </div>
+
+    {% block content %}{% endblock %}
+
+</body>
+
+<script>
+    document.querySelectorAll('.mdui-drawer > ul > a').forEach(function(e) {
+        if (document.location.pathname == e.attributes['href'].value) {
+            e.classList.toggle('mdui-list-item-active');
+        }
+    })
+</script>
+
+<script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
+
+</html>

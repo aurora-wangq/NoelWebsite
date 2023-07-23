@@ -1,0 +1,40 @@
+{% if post.post_img1 %}
+<div class="mdui-col-sm-3 post">
+	<a href="{% url 'fan:post_detail' post.id %}">
+		{% if post.pinned %}
+		<i class="mdui-icon fa-solid fa-thumbtack pinned-icon" style="background-color: rgba(215, 92, 153, 0);color: #90a5b5c5;"></i> 
+		{% endif %}
+		{% if post.show_view %}
+		<img src="/thumbnail/{{post.post_img1}}" class="post-image post-image-blur" />
+		{% else %}
+		<img src="/thumbnail/{{post.post_img1}}" class="post-image" />
+		{% endif %}
+	</a>
+
+	<br />
+
+	<div class="mdui-text-truncate post-content">
+		<a href="{% url 'fan:post_detail' post.id %}">
+			{{post.post_content}}
+		</a>
+	</div>
+
+	<div class="mdui-row mdui-valign">
+		<div class="mdui-col-xs-2">
+			<a href="{% url 'fan:others_page' post.post_owner.id %}">
+				<img class="post-avatar" src="/media/{{ post.owner_profile.img }}" />
+			</a>
+		</div>
+		<div class="mdui-col-xs-8">
+			<div class="mdui-text-truncate">
+				<a class="post-username" href="{% url 'fan:others_page' post.post_owner.id %}">
+					{{post.owner_profile.nike_name}} @{{post.post_owner.username}}
+				</a>
+			</div>
+		</div>
+		<div class="mdui-col-xs-2">
+			<div style="float:left"><i class="mdui-icon material-icons">favorite</i> {{post.likes}}</div>
+		</div>
+	</div>
+</div>
+{% endif %}

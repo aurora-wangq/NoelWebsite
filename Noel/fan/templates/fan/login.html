@@ -1,0 +1,79 @@
+{% extends "fan/_base.html" %}
+
+{% block title %}登录{% endblock %}
+
+{% block content %}
+
+<style>
+    html {
+        background-image: url('/static/images/loginback.jpg');
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    body {
+        background: none;
+        margin: 10%;
+    }
+
+    .mdui-drawer {
+        backdrop-filter: blur(64px) brightness(200%);
+    }
+
+    .login-view {
+        width: 65%;
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px);
+        display: block;
+        padding: 5%;
+    }
+</style>
+<div class="mdui-container login-view">
+    <div class="mdui-row">
+        <div class="mdui-col-offset-md-3 mdui-col-md-6 mdui-col-offset-xs-1 mdui-col-xs-10">
+            <form action="" method="post">
+                {% csrf_token %}
+                <h2>登录😎</h2>
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Username</label>
+                    <input class="mdui-textfield-input" name="username" id="input-username" pattern="^[\d\w_]+$"
+                        required />
+                </div>
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Password</label>
+                    <input class="mdui-textfield-input" name="password" type="password" id="input-password" required />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mdui-row">
+        <div class="mdui-col-xs-12 mdui-col-offset-md-8 mdui-col-md-2 mdui-valign">
+            <button class="mdui-btn mdui-ripple" id="button-login">登入</button>
+        </div>
+    </div>
+    <div class="mdui-row" >
+        <div class="mdui-col" >
+            <p class="mdui-valign"  style="padding-left: 40%;">
+                没有账号？<a href="{% url 'fan:register' %}">注册</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('button-login').addEventListener('click', e => {
+        if (document.getElementById('input-username').value.length == 0) {
+            mdui.snackbar('Username missing')
+            return
+        }
+        if (document.getElementById('input-password').value.length == 0) {
+            mdui.snackbar('Password missing')
+            return
+        }
+        document.querySelector('form').submit();
+    })
+</script>
+{% endblock %}

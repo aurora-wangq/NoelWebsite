@@ -1,0 +1,45 @@
+<div class="mdui-row mdui-valign">
+    <div class="mdui-col-xs-7 mdui-col-offset-xs-2">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mdui-textfield">
+                <textarea class="mdui-textfield-input" id="input-comment" name="comment_text"
+                    placeholder="说点难听的~"></textarea>
+            </div>
+        </form>
+    </div>
+    <div calss="mdui-col-xs-1">
+        <button class="mdui-btn mdui-center" id="comment-submit">评论</button>
+    </div>
+</div>
+
+{% for comment in comments %}
+<div class="mdui-row mdui-valign">
+    <div class="mdui-col-offset-md-2 mdui-col-md-1">
+        <a href="/user/{{comment.user.owner.id}}">
+            <img src="/media/{{ comment.user.img }}" class="avatar" />
+        </a>
+    </div>
+    <div class="mdui-col-md-6 mdui-col-xs-10">
+        <p class="comment-username">{{comment.user.nike_name}}</p>
+        <p class="comment-content">{{comment.text}}</p>
+    </div>
+    <div class="mdui-col-xs-1">
+        <span>
+            #{{forloop.counter}}
+        </span>
+    </div>
+</div>
+{% endfor %}
+
+<script>
+    document.getElementById('comment-submit').addEventListener('click', e => {
+        var elem = document.getElementById('input-comment');
+        if (elem.value.trim().length == 0) {
+            mdui.snackbar('评论不能为空');
+        }
+        else {
+            document.querySelector('form').submit();
+        }
+    });
+</script>

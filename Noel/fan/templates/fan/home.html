@@ -1,0 +1,236 @@
+{% extends "fan/_base.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% block content %}
+<style>
+  .post-image-blur {
+    filter: blur(64px);
+    transition: filter 300ms;
+  }
+
+  .post-image {
+    height: 300px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    transition: opacity .1s;
+    position: relative;
+  }
+
+  .post-image:hover {
+    transition: opacity .1s;
+    opacity: 80%;
+  }
+
+  .pinned-icon {
+    position: absolute;
+    float: left;
+    left: 8px;
+    top: 12px;
+    font-size: 32px;
+    font-weight: bolder;
+    background-color: rgba(200, 200, 200, 0.5);
+    color: black;
+    z-index: 1;
+    padding: 6px 6px 6px 6px;
+    border-radius: 4px;
+  }
+
+  .post-container {
+    align-items: center;
+    height: 200px;
+    width: 300px;
+    justify-content: center;
+    display: flex;
+  }
+
+  html {
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  body {
+    background: none;
+  }
+
+  .posts-view {
+    display: block;
+    padding: 70px 0;
+  }
+
+  .thesaurus {
+    font-size: 24px;
+    font-weight: lighter;
+    text-align: center;
+    padding: 16px 0 16px 0;
+  }
+
+  .post-content>a {
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .post-content {
+    margin: 4px 0 4px 0;
+    min-height: 24px;
+  }
+
+  .post-username {
+    font-size: 14px;
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .post {
+    position: relative;
+    padding-top: 12px;
+    padding-bottom: 24px;
+  }
+
+  .post-avatar {
+    width: 32px;
+    height: 32px;
+    margin: auto;
+    border-radius: 100%;
+  }
+
+  .notice-container {
+    margin: 12px 0 12px 0;
+    padding: 6px 0 6px 0;
+    border-radius: 4px;
+    border: 1px solid gray;
+  }
+
+  .notice-creator {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .notice-content {
+    font-size: 16px;
+  }
+</style>
+
+<button class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-pink-200" style="z-index: 1000;"
+  mdui-dialog="{target: '#new-post-dialog'}">
+  <i class="mdui-icon material-icons">add</i>
+</button>
+
+<div class="mdui-dialog" id="new-post-dialog">
+  <div class="mdui-dialog-title">新帖子</div>
+  <div class="mdui-dialog-content">
+    <form action="/edit/" method="post" enctype="multipart/form-data" id="submit-form">
+      {% csrf_token %}
+      <div class="mdui-container">
+        <div class="mdui-row mdui-valign">
+
+          <div class="mdui-col-xs-1">
+            <i class="mdui-icon material-icons">short_text</i>
+          </div>
+
+          <div class="mdui-col-xs-11">
+            <div class="mdui-textfield">
+              <textarea class="mdui-textfield-input" name="content" rows="3" placeholder="写点啥呢~"></textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <br />
+
+        <div class="mdui-row mdui-valign">
+          <div class="mdui-col-xs-1">
+            <i class="mdui-icon material-icons">visibility</i>
+          </div>
+          <div class="mdui-col-xs-11">
+            <label class="mdui-checkbox">
+              <input type="checkbox" name="show_view" value="true" />
+              <i class="mdui-checkbox-icon"></i>隐藏缩略图
+            </label>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="mdui-row mdui-valign">
+          <div class="mdui-col-xs-1">
+            <i class="mdui-icon material-icons">image</i>
+          </div>
+          <div class="mdui-col-xs-11">
+            <input class="file-input" type="file" name="post_img">
+          </div>
+        </div>
+      </div>
+  </div>
+
+  </form>
+  <div class="mdui-dialog-actions">
+    <button class="mdui-btn mdui-ripple" mdui-dialog-close>
+      <i class="mdui-icon material-icons">close</i>
+      取消
+    </button>
+    <button class="mdui-btn mdui-ripple" id="submit-button">
+      <i class="mdui-icon material-icons">check</i>
+      发布
+    </button>
+  </div>
+</div>
+</div>
+
+<p class="thesaurus">
+  {{thesaurus|safe}}
+</p>
+<div class="mdui-container">
+  <div class="mdui-row mdui-valign notice-container">
+    <div class="mdui-col-xs-1">
+      <i class="mdui-icon material-icons mdui-center" style="padding-left: 1%;">notifications_active</i>
+    </div>
+    <div class="mdui-col-xs-1 mdui-hidden-md-down">
+      公告
+    </div>
+    <div class="mdui-container">
+      {% for n in notice %}
+      <div class="mdui-row">
+        <div class="mdui-col-xs-1 notice-creator mdui-valign mdui-truncate mdui-hidden-md-down">
+          {{n.creater}}
+        </div>
+        <div class="mdui-col-xs-11 notice-content">
+          {{n.notice}}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="mdui-row">
+
+    {% for post in posts %}
+    {% include "fan/components/content_base.html" with post=post %}
+    {% endfor %}
+
+  </div>
+
+</div>
+
+<script>
+  document.querySelector('#submit-button').addEventListener('click', e => {
+    e.target.disabled = true;
+    var elem = document.querySelector('form')
+    if (elem.querySelector('input[type="file"]').value === '') {
+      mdui.snackbar('File cannot be empty')
+      e.target.disabled = false;
+      return;
+    }
+    elem.submit();
+  })
+</script>
+
+{% endblock %}

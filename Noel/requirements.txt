@@ -1,0 +1,5 @@
+fontawesomefree==6.4.0
+django
+pymysql
+Pillow
+django-ckeditor

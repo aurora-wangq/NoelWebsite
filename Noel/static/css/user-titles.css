@@ -1,0 +1,30 @@
+
+/* site owner */
+.user-title-level-1 {
+    background-color: gold;
+    
+}
+
+/* site administrator */
+.user-title-level-2 {
+    background-color: purple;
+    color: white;
+}
+
+/* special user */
+.user-title-level-3 {
+    background-color: darkred;
+    color: white;
+}
+
+.user-title-level-4 {
+    background-color: black;
+    color: white;
+}
+
+.user-title {
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 12px 4px 12px;
+    border-radius: 4px;
+}

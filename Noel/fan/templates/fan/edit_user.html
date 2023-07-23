@@ -1,0 +1,138 @@
+{% extends "fan/_base.html" %}
+
+{% block title %}编辑资料{% endblock %}
+
+{% block content %}
+<style>
+	html {
+		background-image: url('/media/{{ user.back_img }}');
+		height: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+
+	body {
+		background: none;
+		margin: 0%;
+	}
+</style>
+
+
+<div class="mdui-container profile-view mdui-hoverable" style="opacity: 100%;">
+	{% include "fan/components/user_info.html" with profile=user user=user.owner %}
+
+	{% include "fan/components/user_detail.html" with profile=user user=user.owner %}
+
+
+	<div class="mdui-row">
+		<div class="mdui-col-xs-6 mdui-col-offset-xs-2 mdui-typo" style="font-size: 24px">
+			{{user.desc}}
+		</div>
+	</div>
+
+	<div class="mdui-container">
+		<form action="{% url 'fan:editp' %}" method="post" enctype="multipart/form-data" class="mdui-center">
+			{% csrf_token %}
+			<div class="mdui-row mdui-valign">
+				<div class="mdui-col-xs-1 mdui-col-offset-xs-2">
+					<i class="mdui-icon material-icons">account_circle</i>
+				</div>
+				<div class="mdui-col-xs-7">
+					<div class="mdui-textfield mdui-textfield-floating-label">
+						<label class="mdui-textfield-label">昵称</label>
+						<input class="mdui-textfield-input" type="text" name="nike_name" value="{{user.nike_name}}" />
+					</div>
+				</div>
+			</div>
+			<div class="mdui-row mdui-valign">
+				<div class="mdui-col-xs-1 mdui-col-offset-xs-2">
+					<i class="mdui-icon material-icons">location_on</i>
+				</div>
+				<div class="mdui-col-xs-7">
+					<div class="mdui-textfield mdui-textfield-floating-label">
+						<label class="mdui-textfield-label">位置</label>
+						<input class="mdui-textfield-input" type="text" name="address" value="{{user.address}}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="mdui-row mdui-valign">
+				<div class="mdui-col-xs-1 mdui-col-offset-xs-2">
+					<i class="mdui-icon fa-solid fa-austral-sign"></i>
+				</div>
+				<div class="mdui-col-xs-7">
+					<div class="mdui-textfield mdui-textfield-floating-label">
+						<label class="mdui-textfield-label">签名</label>
+						<input class="mdui-textfield-input" type="text" name="sign" value="{{user.sign}}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="mdui-row mdui-valign">
+				<div class="mdui-col-xs-1 mdui-col-offset-xs-2">
+					<i class="mdui-icon material-icons">today</i>
+				</div>
+				<div class="mdui-col-xs-7">
+					<div class="mdui-textfield">
+						<label class="mdui-textfield-label">生日</label>
+						<input class="mdui-textfield-input" type="date" name="birthday" />
+					</div>
+				</div>
+			</div>
+
+			<div class="mdui-row mdui-valign">
+				<div class="mdui-col-xs-1 mdui-col-offset-xs-2">
+					<i class="mdui-icon material-icons">description</i>
+				</div>
+				<div class="mdui-col-xs-7">
+					<div class="mdui-textfield mdui-textfield-floating-label">
+						<label class="mdui-textfield-label">简介</label>
+						<input class="mdui-textfield-input" type="text" name="desc" value="{{user.desc}}" />
+					</div>
+				</div>
+			</div>
+
+			<br />
+
+			<div class="mdui-row mdui-valign">
+				<div class="mdui-col-xs-1 mdui-col-offset-xs-2">
+					<i class="mdui-icon material-icons">account_circle</i>
+				</div>
+				<div class="mdui-col-xs-7">
+					<div class="">
+						<label class="mdui-textfield-label">头像</label>
+						<input type="file" name="img" />
+					</div>
+				</div>
+			</div>
+
+			<br />
+
+			<div class="mdui-row mdui-valign">
+				<div class="mdui-col-xs-1 mdui-col-offset-xs-2">
+					<i class="mdui-icon material-icons">image</i>
+				</div>
+				<div class="mdui-col-xs-7">
+					<div class="">
+						<label class="mdui-textfield-label">背景</label>
+						<input type="file" name="backimg" />
+					</div>
+				</div>
+			</div>
+
+			<div class="mdui-row">
+				<div class="mdui-col-offset-md-10">
+					<button class="mdui-btn mdui-ripple">
+						<i class="mdui-icon material-icons">save</i>
+						保存
+					</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+</div>
+{% endblock %}

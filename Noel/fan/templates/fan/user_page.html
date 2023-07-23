@@ -1,0 +1,59 @@
+{% extends "fan/_base.html" %}
+
+
+{% block title %}{{user.owner.username}}的个人主页{% endblock %}
+
+{% block content %}
+<style>
+    html {
+        background-image: url('/media/{{ user.back_img }}');
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    body {
+        background: none;
+        margin: 10%;
+    }
+
+    .mdui-drawer {
+        backdrop-filter: blur(64px) brightness(200%);
+        background-color: white;
+    }
+</style>
+
+<div class="mdui-container profile-view">
+    {% include "fan/components/user_info.html" with profile=user user=user.owner %}
+    
+    {% include "fan/components/user_detail.html" with profile=user user=user.owner %}
+    
+
+    <br />
+
+    <div class="mdui-row">
+        <div class="mdui-col-xs-6 mdui-col-offset-xs-2 mdui-typo" style="font-size: 24px;color:black">
+            {{user.desc}}
+        </div>
+    </div>
+
+    <div class="mdui-row">
+        <div class="mdui-col-xs-2 mdui-col-offset-md-10">
+            <a href="/edit_profile/" class="mdui-btn mdui-ripple">编辑信息</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleHidden() {
+        document.querySelector('.profile-view').classList.toggle('profile-view-hidden');
+    }
+</script>
+
+<button class="mdui-btn mdui-fab mdui-fab-fixed mdui-ripple mdui-color-pink-50" onclick="toggleHidden()">
+    <i class="mdui-icon material-icons">image</i>
+</button>
+
+{% endblock %}

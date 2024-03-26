@@ -1,7 +1,3 @@
-#### 本项目是项目Noel的简化版本
-
-#### Project Leader：Noel
-
 #### Code Contributor：[AenStarAX](https://github.com/aurora-wangq) & [MoveToEx](https://github.com/MoveToEx)
 ---
 # 食用方法：

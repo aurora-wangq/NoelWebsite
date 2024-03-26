@@ -1,7 +1,7 @@
 #### Code Contributor：[AenStarAX](https://github.com/aurora-wangq) & [MoveToEx](https://github.com/MoveToEx)
 ---
 # 食用方法：
-#### 开始前请确保您已安装python
+#### 建议的python版本：3.9以上的版本
 ## 😊部署&起洞项目
 ### 控制台进入Noel项目文件夹
 ### 创建虚拟环境

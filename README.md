@@ -111,20 +111,6 @@ BASE_URL:PORT/admin/
 ```text
 用于管理文章
 ```
----
-### 效果图
-
-#### 登陆页
-<image src="https://github.com/aurora-wangq/NoelWebsite/blob/main/Noel/%E9%A2%84%E8%A7%88/Login.png">
-  
-#### 主页
-<image src="https://github.com/aurora-wangq/NoelWebsite/blob/main/Noel/%E9%A2%84%E8%A7%88/Home.png">
-  
-#### 个人主页
-<image src="https://github.com/aurora-wangq/NoelWebsite/blob/main/Noel/%E9%A2%84%E8%A7%88/MyPage.png">
-  
-#### 文章详情页面
-<image src="https://github.com/aurora-wangq/NoelWebsite/blob/main/Noel/%E9%A2%84%E8%A7%88/Post.png">
 
 ---
 
